@@ -2,44 +2,28 @@
 @Author: qink-DN493
 @Date: 2019-12-23 10:08:18
 @LastEditors  : qink-DN493
-@LastEditTime : 2019-12-24 16:03:32
+@LastEditTime : 2019-12-25 08:28:37
 @Description: 
 '''
 
 import time
 def lengthOfLongestSubstring(s: str) -> int:
-    l = len(s)
-    if l == 0:
-        return l
-    for i in range(l):
-        left = l - i
-        for j in range(i+1):
-            ret = s[j:left+j+1]
-            # print(ret)
-            if not isDup(ret):
-                return len(ret)
-                        
-def isDup(s: str) -> bool:
-    for k in range(len(s)):
-        left = s[:k] + s[k+1:]
-        if s[k] in left:
-            return True
-    return False
-
-        # for r in range(l-i):
-        #     left = ret.pop(ret.index(r))
-        #     if r in left:
-        #         continue
-        #     return l-i
-
+    dic = {}
+    start = longest = 0
+    for k,v in enumerate(s):
+        # print(k,v,longest,dic)
+        if v in dic and dic[v] >= start:
+            start = k + 1
+        dic[v] = k
+        longest = max(longest, k - start + 1)
+    return longest
 
 
 s = time.time()
-# print(lengthOfLongestSubstring("abcabcbb"))
-# print(lengthOfLongestSubstring(""))
-# print(lengthOfLongestSubstring("au"))
-# print(lengthOfLongestSubstring("bbbbb"))
-# print(lengthOfLongestSubstring("pwwkew"))
+print(lengthOfLongestSubstring("abcabcbb"))
+print(lengthOfLongestSubstring(""))
+print(lengthOfLongestSubstring("au"))
+print(lengthOfLongestSubstring("bbbbb"))
 print(lengthOfLongestSubstring("pwwkew"))
 
 e = time.time()
